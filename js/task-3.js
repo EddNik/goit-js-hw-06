@@ -1,22 +1,34 @@
-const profile = {
-  username: 'Jacob',
-  playTime: 300,
-  changeUsername(newName) {
-    this.username = newName;
-  },
-  updatePlayTime(hours) {
-    this.playTime += hours;
-  },
-  getInfo() {
-    return `${this.username} has ${this.playTime} active hours!`;
-  },
-};
-console.log('task-3.js');
+class StringBuilder {
+  #value;
 
-console.log(profile.getInfo()); // "Jacob has 300 active hours!"
+  constructor(initialValue) {
+    this.#value = initialValue;
+  }
+  getValue() {
+    return this.#value;
+  }
 
-profile.changeUsername('Marco');
-console.log(profile.getInfo()); // "Marco has 300 active hours!"
+  padEnd(str) {
+    this.#value = this.#value.concat(str);
+  }
 
-profile.updatePlayTime(20);
-console.log(profile.getInfo()); // "Marco has 320 active hours!"
+  padStart(str) {
+    this.#value = str.concat(this.#value);
+  }
+
+  padBoth(str) {
+    this.#value = str + this.#value + str;
+    // this.#value = str.concat(this.#value).concat(str);
+  }
+}
+
+console.log('task-3');
+
+const builder = new StringBuilder('.');
+console.log(builder.getValue()); // "."
+builder.padStart('^');
+console.log(builder.getValue()); // "^."
+builder.padEnd('^');
+console.log(builder.getValue()); // "^.^"
+builder.padBoth('=');
+console.log(builder.getValue()); // "=^.^="

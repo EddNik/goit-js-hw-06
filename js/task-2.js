@@ -1,42 +1,40 @@
-function calcAverageCalories(days) {
-  let totalCalories = 0;
-  let calcAverageCalories = 0;
-  let amountDays = Object.keys(days).length;
+class Storage {
+  #items = [];
 
-  if (amountDays > 0) {
-    for (const day of days) {
-      if (days.length > 0) {
-        totalCalories += day.calories;
-      }
-    }
-    calcAverageCalories = totalCalories / amountDays;
+  constructor(arrayItems) {
+    this.#items = arrayItems;
   }
-  return calcAverageCalories;
+
+  getItems() {
+    return this.#items;
+  }
+
+  addItem(newItem) {
+    this.#items.push(newItem);
+  }
+
+  removeItem(itemToRemove) {
+    if (this.#items.includes(itemToRemove)) {
+      let itemsAfterRemove = [];
+      const indexRemove = this.#items.indexOf(itemToRemove);
+      itemsAfterRemove = this.#items
+        .slice(0, indexRemove)
+        .concat(this.#items.slice(indexRemove + 1));
+      this.#items = itemsAfterRemove;
+    }
+  }
 }
-console.log('task-2.js');
 
-console.log(
-  calcAverageCalories([
-    { day: 'monday', calories: 3010 },
-    { day: 'tuesday', calories: 3200 },
-    { day: 'wednesday', calories: 3120 },
-    { day: 'thursday', calories: 2900 },
-    { day: 'friday', calories: 3450 },
-    { day: 'saturday', calories: 3280 },
-    { day: 'sunday', calories: 3300 },
-  ])
-); // 3180
+console.log('task-2');
 
-console.log(
-  calcAverageCalories([
-    { day: 'monday', calories: 2040 },
-    { day: 'tuesday', calories: 2270 },
-    { day: 'wednesday', calories: 2420 },
-    { day: 'thursday', calories: 1900 },
-    { day: 'friday', calories: 2370 },
-    { day: 'saturday', calories: 2280 },
-    { day: 'sunday', calories: 2610 },
-  ])
-); // 2270
+const storage = new Storage(['Nanitoids', 'Prolonger', 'Antigravitator']);
+console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator"]
 
-console.log(calcAverageCalories([])); // 0
+storage.addItem('Droid');
+console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator", "Droid"]
+
+storage.removeItem('Prolonger');
+console.log(storage.getItems()); // ["Nanitoids", "Antigravitator", "Droid"]
+
+storage.removeItem('Scaner');
+console.log(storage.getItems()); // ["Nanitoids", "Antigravitator", "Droid"]
